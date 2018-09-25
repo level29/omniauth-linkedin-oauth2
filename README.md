@@ -1,10 +1,11 @@
 # OmniAuth LinkedIn OAuth2 Strategy
 
-[![Build Status](https://travis-ci.org/decioferreira/omniauth-linkedin-oauth2.png?branch=master)](https://travis-ci.org/decioferreira/omniauth-linkedin-oauth2)
+This project has been forked from https://github.com/decioferreira/omniauth-linkedin-oauth2
 
-A LinkedIn OAuth2 strategy for OmniAuth.
+It has changed from using the Linkedin API v1 to use API v2 for retrieving
+member's details.
 
-For more details, read the LinkedIn documentation: https://developer.linkedin.com/documents/authentication
+For more details, read the LinkedIn documentation: https://developer.linkedin.com/docs/oauth2
 
 ## Installation
 
@@ -20,13 +21,7 @@ Or install it yourself as:
 
     $ gem install omniauth-linkedin-oauth2
 
-## Upgrading
-
-Previous versions of this gem used the provider name `:linkedin_oauth2`. In order to provide a cleaner upgrade path for users who were previously using the OAuth 1.0 omniauth adapter for LinkedIn [https://github.com/skorks/omniauth-linkedin], this has been renamed to just `:linkedin`.
-
-Users who are upgrading from previous versions of this gem may need to update their Omniauth and/or Devise configurations to use the shorter provider name.
-
-## Usage
+# Usage
 
 Register your application with LinkedIn to receive an API key: https://www.linkedin.com/secure/developer
 
@@ -43,7 +38,7 @@ You can now access the OmniAuth LinkedIn OAuth2 URL: `/auth/linkedin`.
 ## Granting Member Permissions to Your Application
 
 With the LinkedIn API, you have the ability to specify which permissions you want users to grant your application.
-For more details, read the LinkedIn documentation: https://developer.linkedin.com/documents/authentication
+For more details, read the LinkedIn documentation: https://developer.linkedin.com/docs/guide/v2
 
 By default, omniauth-linkedin-oauth2 requests the following permissions:
 
@@ -52,28 +47,27 @@ By default, omniauth-linkedin-oauth2 requests the following permissions:
 You can configure the scope option:
 
 ```ruby
-provider :linkedin, ENV['LINKEDIN_KEY'], ENV['LINKEDIN_SECRET'], :scope => 'r_fullprofile r_emailaddress r_network'
+provider :linkedin, ENV['LINKEDIN_KEY'], ENV['LINKEDIN_SECRET'], :scope => 'r_fullprofile r_network'
 ```
 
 ## Profile Fields
 
-When specifying which permissions you want to users to grant to your application, you will probably want to specify the array of fields that you want returned in the omniauth hash. The list of default fields is as follows:
+When specifying which permissions you want users to grant to your application, you will probably want to specify the array of fields that you want returned in the omniauth hash. The list of default fields is as follows:
 
 ```ruby
-['id', 'email-address', 'first-name', 'last-name', 'headline', 'location', 'industry', 'picture-url', 'public-profile-url']
+['id', 'firstName', 'lastName', 'headline', 'location', 'industryId', 'emailAddress', 'profilePicture']
 ```
 
-Here's an example of a possible configuration where the fields returned from the API are: id, email-address, first-name and last-name.
+`emailAddress` and `profilePictureUrl` are not profile fields, but can be added like this to make it simpler to request this data.
+
+Here's an example of a possible configuration where the fields returned from the API are: id, firstName and lastName.
 
 ```ruby
-provider :linkedin, ENV['LINKEDIN_KEY'], ENV['LINKEDIN_SECRET'], :fields => ['id', 'email-address', 'first-name', 'last-name']
+provider :linkedin, ENV['LINKEDIN_KEY'], ENV['LINKEDIN_SECRET'], :fields => ['id', 'firstName', 'lastName']
 ```
 
-To see a complete list of available fields, consult the LinkedIn documentation at: https://developer.linkedin.com/documents/profile-fields
+To see a complete list of available fields, consult the LinkedIn documentation at: https://developer.linkedin.com/docs/ref/v2/profile/basic-profile
 
-## Other Options
-
-* `secure_image_url` - Set to `true` to use https for the profile picture url. Default is `false`.
 
 ## Contributing
 

@@ -1,4 +1,4 @@
-Copyright (c) 2013 Décio Ferreira
+Copyright (c) 2018 Level 29
 
 MIT License
 

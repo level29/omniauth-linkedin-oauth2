@@ -77,7 +77,7 @@ describe OmniAuth::Strategies::LinkedIn do
     before :each do
       access_token = double('access token')
       response = double('response', :parsed => { :foo => 'bar' })
-      expect(access_token).to receive(:get).with("/v1/people/~:(baz,qux)?format=json").and_return(response)
+      expect(access_token).to receive(:get).with("/v2/me?projection=(baz,qux)").and_return(response)
 
       allow(subject).to receive(:option_fields) { ['baz', 'qux'] }
       allow(subject).to receive(:access_token) { access_token }
@@ -95,7 +95,7 @@ describe OmniAuth::Strategies::LinkedIn do
       end
 
       it 'sets default scope' do
-        expect(subject.authorize_params['scope']).to eq('r_basicprofile r_emailaddress')
+        expect(subject.authorize_params['scope']).to eq('r_basicprofile')
       end
     end
   end
